@@ -1,0 +1,2 @@
+-r requirements.txt
+lightkurve>=2.4

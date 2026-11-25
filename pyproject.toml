@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stellar-pulsation-pipeline"
+version = "2.0.0rc2"
+description = "Real-data retrieval and scientific Python analysis pipeline for pulsating variable stars"
+authors = [{name = "Ali Razeghi"}]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "astropy>=5.3",
+    "emcee>=3.1",
+    "matplotlib>=3.7",
+    "pillow>=9.5",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+tess = ["lightkurve>=2.4"]
+test = ["pytest>=7.4"]
+all = ["lightkurve>=2.4"]
+
+[project.scripts]
+stellar-pulsation = "stellar_pulsation.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["stellar_pulsation*"]
