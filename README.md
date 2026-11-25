@@ -2,15 +2,32 @@
 
 A scientific Python pipeline for retrieving **real public variable-star photometry**, preserving provenance, and running period search, phase folding, weighted Fourier analysis, morphology diagnostics, optional Bayesian photometric inference, and publication-ready visualization.
 
+## Demonstrations
+
+### Real OGLE-IV photometry
+
+Public OGLE-IV observations shown alongside the period search and
+phase-folded Fourier reconstruction.
+
+![OGLE-IV photometry analysis](assets/ogle_real_data_pipeline_output.gif)
+
+### Delta Cephei light-curve reconstruction
+
+An animated Fourier reconstruction of an empirical Johnson-V light-curve
+template calibrated from observations. This is a light-curve visualization,
+not a hydrodynamic simulation.
+
+![Delta Cephei Fourier reconstruction](assets/delta_cep_real_data_linkedin.gif)
+
 ## What changed in v2
 
 The program is no longer centered on a synthetic demonstration. With no command-line source specified, it opens an interactive source menu and lets the user choose a public archive. If the selected archive has no usable data for the requested target/band, the program reports that condition and returns to source selection; it never silently substitutes another star or catalog.
 
 ### Credential-free remote sources
 
-1. **AAVSO International Database** — anonymous public light-curve retrieval through the VSX/AID route. Common variable-star names/identifiers can be used; select a homogeneous band such as Johnson V when possible.
-2. **OGLE-IV OCVS** — anonymous direct access to public time-series photometry. Exact OGLE identifiers are preferred. For common names, the adapter can resolve coordinates through CDS Sesame and search configured OCVS pulsating-variable identification tables for a positional match.
-3. **TESS / MAST** — anonymous public TESS light curves through Lightkurve. Flux is converted to **relative magnitude** and is never treated as calibrated Johnson V.
+1. **AAVSO International Database**: anonymous public light-curve retrieval through the VSX/AID route. Common variable-star names/identifiers can be used; select a homogeneous band such as Johnson V when possible.
+2. **OGLE-IV OCVS**: anonymous direct access to public time-series photometry. Exact OGLE identifiers are preferred. For common names, the adapter can resolve coordinates through CDS Sesame and search configured OCVS pulsating-variable identification tables for a positional match.
+3. **TESS / MAST**: anonymous public TESS light curves through Lightkurve. Flux is converted to **relative magnitude** and is never treated as calibrated Johnson V.
 
 A **Local CSV/ASCII** source remains available for externally downloaded photometry.
 
@@ -60,7 +77,7 @@ Available data sources:
   q. Quit
 ```
 
-For a remote source it then asks for the target and photometric band. A target miss is explicit and the user may choose another source.
+For a remote source, it then asks for the target and photometric band. A target miss is explicit, and the user may choose another source.
 
 ## Non-interactive examples
 
@@ -99,11 +116,11 @@ stellar-pulsation --list-sources
 
 Each run writes:
 
-- `raw_photometry.csv` — normalized time, magnitude, uncertainty, band, source, target
-- `raw_photometry.metadata.json` — provenance URL, native time system, source identifier, retrieval metadata
-- `summary.png` — real-data time series, Lomb–Scargle periodogram, phase-folded weighted Fourier fit, residuals
-- `results.json` — period, Fourier/morphology diagnostics, MCMC diagnostics, provenance and analysis scope
-- `pulsation.gif` — **synthetic mode only**; real observations do not receive a physically misleading stellar-radius animation
+- `raw_photometry.csv`: normalized time, magnitude, uncertainty, band, source, target
+- `raw_photometry.metadata.json`: provenance URL, native time system, source identifier, retrieval metadata
+- `summary.png`: real-data time series, Lomb–Scargle periodogram, phase-folded weighted Fourier fit, residuals
+- `results.json`: period, Fourier/morphology diagnostics, MCMC diagnostics, provenance and analysis scope
+- `pulsation.gif`: **synthetic mode only**; real observations do not receive a physically misleading stellar-radius animation
 
 ## Scientific safeguards
 
@@ -119,7 +136,7 @@ Each run writes:
 
 ## OGLE target resolution
 
-Exact OCVS identifiers are the most reliable. Supported pulsating-variable collection prefixes include classical Cepheids, Type-II Cepheids, anomalous Cepheids, RR Lyrae and selected delta-Scuti collections in LMC/SMC/Galactic disk/bulge where corresponding OCVS directories exist. Common-name resolution depends on CDS Sesame and a positional match to the configured OGLE identification tables; if no match is found within the configured radius, the program reports “not found.”
+Exact OCVS identifiers are the most reliable. Supported pulsating-variable collection prefixes include classical Cepheids, Type-II Cepheids, anomalous Cepheids, RR Lyrae, and selected delta-Scuti collections in LMC/SMC/Galactic disk/bulge where corresponding OCVS directories exist. Common-name resolution depends on CDS Sesame and a positional match to the configured OGLE identification tables; if no match is found within the configured radius, the program reports “not found.”
 
 ## AAVSO note
 
@@ -137,7 +154,7 @@ pytest -q
 
 Remote-source unit tests use mocked HTTP responses so CI does not depend on live archive uptime. The suite also contains an observational-render regression test that passes the real `fit_fourier_series()` result into `render_observational_summary()`, plus an end-to-end local-file CLI integration test covering acquisition → preprocessing → Lomb–Scargle → Fourier fit → rendering → output files. Real remote endpoint behavior should additionally be checked with a network-enabled integration run before a tagged final release.
 
-## References / data services
+## References/data services
 
 - AAVSO International Database / VSX public data access.
 - OGLE-IV Collection of Variable Stars (OCVS), University of Warsaw.
